@@ -36,7 +36,7 @@ This repository contains my **solutions** to the Ziglings exercise series — a 
 1. Clone the repo:
 
    ```bash
-   git clone https://github.com/<your-username>/ziglings-solutions.git  
+   git clone https://github.com/caleberi/ziglings-solutions.git  
    ```
 2. Navigate to a solved exercise folder, e.g.:
 
