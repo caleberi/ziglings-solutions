@@ -33,6 +33,12 @@ pub fn main() void {
         .experience = 10,
     };
 
+    chars[1] = Character{
+        .experience = 20,
+        .health = 100,
+        .role = Role.bard,
+        .gold = 10,
+    };
     // Please add "Zump the Loud" with the following properties:
     //
     //     role       bard

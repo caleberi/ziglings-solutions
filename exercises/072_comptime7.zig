@@ -16,6 +16,12 @@
 const print = @import("std").debug.print;
 
 pub fn main() void {
+    // const foo = [3]*const [5]u8{ "~{s}~", "<{s}>", "d{s}b" };
+    // comptime var i = 0;
+    // inline while (i < foo.len) : (i += 1) {
+    //     print(foo[i] ++ "\n", .{foo[i]});
+    // }
+
     // Here is a string containing a series of arithmetic
     // operations and single-digit decimal values. Let's call
     // each operation and digit pair an "instruction".
@@ -35,11 +41,11 @@ pub fn main() void {
     // at compile time.
     //
     // Please fix this to loop once per "instruction":
-    ??? (i < instructions.len) : (???) {
+    inline while (i < instructions.len) : (i += 1) {
 
         // This gets the digit from the "instruction". Can you
         // figure out why we subtract '0' from it?
-        const digit = instructions[i + 1] - '0';
+        const digit: i8 = instructions[i + 1] + -'0';
 
         // This 'switch' statement contains the actual work done
         // at runtime. At first, this doesn't seem exciting...
@@ -47,7 +53,9 @@ pub fn main() void {
             '+' => value += digit,
             '-' => value -= digit,
             '*' => value *= digit,
-            else => unreachable,
+            else => {
+                i += 1;
+            },
         }
         // ...But it's quite a bit more exciting than it first appears.
         // The 'inline while' no longer exists at runtime and neither

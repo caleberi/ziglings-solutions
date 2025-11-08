@@ -30,23 +30,37 @@ pub fn main() !void {
     const file = try output_dir.openFile("zigling.txt", .{});
     defer file.close();
 
+    // const gpa: std.heap.GeneralPurposeAllocator(.{}) = .{};
+    // defer std.debug.assert(gpa.deinit() == .ok);
+    // const allocator = gpa.allocator();
+
     // initialize an array of u8 with all letter 'A'
     // we need to pick the size of the array, 64 seems like a good number
     // fix the initialization below
-    var content = ['A']*64;
+    // var content = try allocator.alloc(u8, 64);
+    // defer allocator.free(content);
+
+    var content = [_]u8{'A'} ** 64;
+
     // this should print out : `AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA`
     std.debug.print("{s}\n", .{content});
 
     // okay, seems like a threat of violence is not the answer in this case
     // can you go here to find a way to read the content?
     // https://ziglang.org/documentation/master/std/#std.fs.File
-    // hint: you might find two answers that are both valid in this case
-    const bytes_read = zig_read_the_file_or_i_will_fight_you(&content);
+    // hint: you might find two answers that are both Q                               valid in this case
+    const bytes_read = try zig_read_the_file_or_i_will_fight_you(file, &content);
 
     // Woah, too screamy. I know you're excited for zigling time but tone it down a bit.
     // Can you print only what we read from the file?
     std.debug.print("Successfully Read {d} bytes: {s}\n", .{
         bytes_read,
-        content, // change this line only
+        content[0..bytes_read], // change this line only
     });
+}
+
+fn zig_read_the_file_or_i_will_fight_you(file: std.fs.File, buffer: []u8) !usize {
+    const number_of_read_byte = try file.read(buffer);
+    buffer[number_of_read_byte] = 0;
+    return number_of_read_byte;
 }
